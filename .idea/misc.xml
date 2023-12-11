@@ -1,0 +1,24 @@
+<project version="4">
+  <component name="ExternalStorageConfigurationManager" enabled="true" />
+  <component name="MavenProjectsManager">
+    <option name="originalFiles">
+      <list>
+        <option value="$PROJECT_DIR$/billing/pom.xml" />
+        <option value="$PROJECT_DIR$/customer/pom.xml" />
+        <option value="$PROJECT_DIR$/paymentchainparent/pom.xml" />
+        <option value="$PROJECT_DIR$/paymentchainparent/businessdomain/product/pom.xml" />
+        <option value="$PROJECT_DIR$/paymentchainparent/businessdomain/customer/pom.xml" />
+        <option value="$PROJECT_DIR$/paymentchainparent/businessdomain/Transactions/pom.xml" />
+        <option value="$PROJECT_DIR$/paymentchainparent/infraestructuradomain/eurekaServer/pom.xml" />
+        <option value="$PROJECT_DIR$/paymentchainparent/infrastructuredomain/eurekaServer/pom.xml" />
+        <option value="$PROJECT_DIR$/paymentchainparent/infrastructuredomain/adminServer/pom.xml" />
+        <option value="$PROJECT_DIR$/paymentchainparent/infrastructuredomain/configServer/pom.xml" />
+        <option value="$PROJECT_DIR$/paymentchainparent/infrastructuredomain/pom.xml" />
+        <option value="$PROJECT_DIR$/paymentchainparent/businessdomain/pom.xml" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" project-jdk-name="17" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/out" />
+  </component>
+</project>
