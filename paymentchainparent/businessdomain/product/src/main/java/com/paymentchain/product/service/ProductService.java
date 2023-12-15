@@ -1,5 +1,9 @@
 package com.paymentchain.product.service;
 
+import com.paymentchain.product.common.ProductRequestMapper;
+import com.paymentchain.product.common.ProductResponseMapper;
+import com.paymentchain.product.dto.ProductRequest;
+import com.paymentchain.product.dto.ProductResponse;
 import com.paymentchain.product.entities.Product;
 import com.paymentchain.product.respository.ProductRepository;
 import com.paymentchain.product.web.exception.BusinessRuleException;
@@ -12,47 +16,61 @@ import java.util.Optional;
 @Service
 public class ProductService {
     ProductRepository productRepository;
+    ProductRequestMapper productRequestMapper;
+    ProductResponseMapper productResponseMapper;
 
     @Autowired
-    public ProductService(ProductRepository productRepository) {
+    public ProductService(ProductRepository productRepository, ProductRequestMapper productRequestMapper, ProductResponseMapper productResponseMapper) {
         this.productRepository = productRepository;
+        this.productRequestMapper = productRequestMapper;
+        this.productResponseMapper = productResponseMapper;
+
     }
 
-    public Optional<List<Product>> getAllProducts(){
+    public Optional<List<ProductResponse>> getAllProducts(){
         List<Product> productList = productRepository.findAll();
         if (productList.isEmpty()){
             return Optional.empty();
         } else {
-            return Optional.of(productList);
+            List<ProductResponse> responses = this.productResponseMapper.productListToProductResponseList(productList);
+            return Optional.of(responses);
         }
     }
 
-    public Optional<Product> getOneProduct(long id){
-        return this.productRepository.findById(id);
+    public Optional<ProductResponse> getOneProduct(long id){
+        Optional<Product> product = this.productRepository.findById(id);
+
+        return product.map(value -> this.productResponseMapper.productToProductResponse(value));
     }
 
-    public Optional<Product> updateProduct(Long id, Product product){
+    public Optional<ProductResponse> updateProduct(Long id, ProductRequest request){
         Optional<Product> find = this.productRepository.findById(id);
 
         if (find.isPresent()){
-            find.get().setCode(product.getCode());
-            find.get().setName(product.getName());
+            if (request.getCode() != null) find.get().setCode(request.getCode());
+            if (request.getName() != null) find.get().setName(request.getName());
+            ProductResponse response = this.productResponseMapper.productToProductResponse(find.get());
             Product save = productRepository.save(find.get());
 
-            return Optional.of(save);
+            return Optional.of(response);
         } else {
             return Optional.empty();
         }
     }
 
-    public Optional<Product> newProduct(Product product) throws BusinessRuleException {
-        if (product.getName().isEmpty() || product.getCode().isEmpty()) {
+    public Optional<ProductResponse> newProduct(ProductRequest request) throws BusinessRuleException {
+        if (request.getName().isEmpty() || request.getCode().isEmpty()) {
             throw new BusinessRuleException("0001", "Name and code can't be empty", HttpStatus.PRECONDITION_FAILED);
+
         } else {
+            Product product = this.productRequestMapper.productRequestMapperToProduct(request);
             Product save = productRepository.save(product);
             Optional<Product> find = this.productRepository.findById(save.getId());
+
             if (find.isPresent()) {
-                return Optional.of(save);
+                ProductResponse response = this.productResponseMapper.productToProductResponse(save);
+                System.out.println(response);
+                return Optional.of(response);
             } else {
                 return Optional.empty();
             }

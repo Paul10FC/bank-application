@@ -4,6 +4,10 @@ import com.paymentchain.transactions.entities.dto.TransactionDTO;
 import com.paymentchain.transactions.entities.Transaction;
 import com.paymentchain.transactions.service.exception.BusinessRuleException;
 import com.paymentchain.transactions.service.TransactionService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import java.net.UnknownHostException;
 import java.util.*;
 
+@Tag(name = "Transactions API", description = "The API serve all the functionality to manage transactions")
 @RestController
 @RequestMapping("/transactions")
 public class TransactionRestController {
@@ -23,6 +28,11 @@ public class TransactionRestController {
         this.transactionService = transactionService;
     }
 
+    @Operation(description = "Create a new transaction from a customer iban", summary = "New transaction")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Transaction created"),
+            @ApiResponse(responseCode = "400", description = "Bad request")
+    })
     @PostMapping("/new")
     public ResponseEntity<?> createTransaction(@RequestBody TransactionDTO transaction) throws BusinessRuleException, UnknownHostException {
         Optional<Transaction> transactionResult = this.transactionService.newTransaction(transaction);
@@ -34,6 +44,11 @@ public class TransactionRestController {
         }
     }
 
+    @Operation(description = "Update a transaction from a transaction id", summary = "Update transaction")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Transaction updated"),
+            @ApiResponse(responseCode = "404", description = "Transaction to update not found")
+    })
     @PutMapping("/update")
     public ResponseEntity<?> updateTransaction(TransactionDTO input, @RequestParam Long id) throws BusinessRuleException, UnknownHostException {
         Optional<Transaction> transaction = this.transactionService.updateTransaction(input, id);
@@ -44,6 +59,11 @@ public class TransactionRestController {
        }
     }
 
+    @Operation(description = "Get all transactions from database", summary = "Get all transactions")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Transaction list found"),
+            @ApiResponse(responseCode = "204", description = "Empty transaction list")
+    })
     @GetMapping
     public ResponseEntity<List<Transaction>> getAllTransactions(){
         List<Transaction> transactionList = this.transactionService.getAllTransactions();
@@ -54,13 +74,18 @@ public class TransactionRestController {
         }
     }
 
+    @Operation(description = "Get a list of transactions by customer across iban", summary = "Get customer transactions")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Transaction list found"),
+            @ApiResponse(responseCode = "204", description = "Empty transaction list")
+    })
     @GetMapping("/customer")
     public ResponseEntity<List<Transaction>> findTransactionByAccount(@RequestParam String ibanAccount) throws BusinessRuleException, UnknownHostException {
         List<Transaction> transactionList = this.transactionService.getAllTransactionsByAccount(ibanAccount);
         if (transactionList.isEmpty()){
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } else {
-            return new ResponseEntity<>(transactionList, HttpStatus.FOUND);
+            return new ResponseEntity<>(transactionList, HttpStatus.OK);
         }
     }
 }

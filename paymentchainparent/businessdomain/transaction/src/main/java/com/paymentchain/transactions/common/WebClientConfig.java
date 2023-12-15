@@ -1,4 +1,4 @@
-package com.paymentchain.transactions.web.common;
+package com.paymentchain.transactions.common;
 
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;

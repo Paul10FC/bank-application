@@ -45,7 +45,7 @@ public class InvoiceRestController {
         this.responseMapper = responseMapper;
     }
 
-    @Operation(description = "Return all invoices bundled into Response", summary = "Return 204 if not data found")
+    @Operation(description = "Return all invoices bundled as response", summary = "Return 204 if not data found")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "success"),
             @ApiResponse(responseCode = "500", description = "Internal Server Error")

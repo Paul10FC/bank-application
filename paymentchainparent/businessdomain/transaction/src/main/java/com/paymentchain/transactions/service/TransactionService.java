@@ -179,7 +179,7 @@ public class TransactionService {
                             .retrieve().bodyToMono(JsonNode.class).block();
 
 
-            return Optional.of(account.get("accountMount").asDouble());
+            return Optional.of(account.get("balance").asDouble());
 
         } catch (WebClientResponseException e){
             HttpStatus statusCode = e.getStatusCode();
