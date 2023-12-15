@@ -1,4 +1,4 @@
-package com.paymentchain.transactions.dto;
+package com.paymentchain.transactions.entities.dto;
 
 import com.paymentchain.transactions.entities.Channel;
 import io.swagger.v3.oas.annotations.media.Schema;
