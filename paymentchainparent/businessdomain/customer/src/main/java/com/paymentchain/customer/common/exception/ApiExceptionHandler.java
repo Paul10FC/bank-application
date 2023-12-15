@@ -1,7 +1,7 @@
-package com.paymentchain.customer.exception;
+package com.paymentchain.customer.common.exception;
 
-import com.paymentchain.customer.common.StandardizedApiExceptionResponse;
 import java.net.UnknownHostException;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;

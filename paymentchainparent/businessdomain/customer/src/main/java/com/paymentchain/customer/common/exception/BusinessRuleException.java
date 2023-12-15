@@ -1,4 +1,4 @@
-package com.paymentchain.customer.exception;
+package com.paymentchain.customer.common.exception;
 
 import lombok.Getter;
 import lombok.Setter;

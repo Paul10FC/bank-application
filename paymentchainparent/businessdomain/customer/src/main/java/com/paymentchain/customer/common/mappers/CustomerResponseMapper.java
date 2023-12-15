@@ -1,14 +1,13 @@
-package com.paymentchain.customer.common;
+package com.paymentchain.customer.common.mappers;
 
-import com.paymentchain.customer.dto.CustomerResponse;
-import com.paymentchain.customer.dto.ProductsResponse;
+import com.paymentchain.customer.entities.dto.CustomerResponse;
+import com.paymentchain.customer.entities.dto.ProductsResponse;
 import com.paymentchain.customer.entities.Customer;
 import com.paymentchain.customer.entities.CustomerProduct;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
 
-import javax.validation.groups.Default;
 import java.util.ArrayList;
 import java.util.List;
 

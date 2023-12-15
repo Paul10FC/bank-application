@@ -1,6 +1,6 @@
-package com.paymentchain.customer.common;
+package com.paymentchain.customer.common.mappers;
 
-import com.paymentchain.customer.dto.CustomerRequest;
+import com.paymentchain.customer.entities.dto.CustomerRequest;
 import com.paymentchain.customer.entities.Customer;
 import com.paymentchain.customer.entities.CustomerProduct;
 import org.mapstruct.Mapper;

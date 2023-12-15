@@ -1,8 +1,7 @@
-package com.paymentchain.customer.common;
+package com.paymentchain.customer.common.mappers;
 
-import com.paymentchain.customer.dto.CustomerSimpleResponse;
+import com.paymentchain.customer.entities.dto.CustomerSimpleResponse;
 import com.paymentchain.customer.entities.Customer;
-import io.swagger.v3.oas.annotations.media.Schema;
 import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
