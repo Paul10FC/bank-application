@@ -1,6 +1,7 @@
 package com.paymentchain.transactions.web.controller;
 
-import com.paymentchain.transactions.entities.dto.TransactionDTO;
+import com.paymentchain.transactions.entities.dto.TransactionRequest;
+import com.paymentchain.transactions.entities.dto.TransactionResponse;
 import com.paymentchain.transactions.entities.Transaction;
 import com.paymentchain.transactions.service.exception.BusinessRuleException;
 import com.paymentchain.transactions.service.TransactionService;
@@ -34,7 +35,7 @@ public class TransactionRestController {
             @ApiResponse(responseCode = "400", description = "Bad request")
     })
     @PostMapping("/new")
-    public ResponseEntity<?> createTransaction(@RequestBody TransactionDTO transaction) throws BusinessRuleException, UnknownHostException {
+    public ResponseEntity<?> createTransaction(@RequestBody TransactionRequest transaction) throws BusinessRuleException, UnknownHostException {
         Optional<Transaction> transactionResult = this.transactionService.newTransaction(transaction);
 
         if (transactionResult.isPresent()){
@@ -50,8 +51,8 @@ public class TransactionRestController {
             @ApiResponse(responseCode = "404", description = "Transaction to update not found")
     })
     @PutMapping("/update")
-    public ResponseEntity<?> updateTransaction(TransactionDTO input, @RequestParam Long id) throws BusinessRuleException, UnknownHostException {
-        Optional<Transaction> transaction = this.transactionService.updateTransaction(input, id);
+    public ResponseEntity<?> updateTransaction(TransactionRequest input, @RequestParam String reference) throws BusinessRuleException, UnknownHostException {
+        Optional<Transaction> transaction = this.transactionService.updateTransaction(input, reference);
        if (transaction.isPresent()){
            return ResponseEntity.ok(transaction.get());
        } else {
@@ -65,8 +66,8 @@ public class TransactionRestController {
             @ApiResponse(responseCode = "204", description = "Empty transaction list")
     })
     @GetMapping
-    public ResponseEntity<List<Transaction>> getAllTransactions(){
-        List<Transaction> transactionList = this.transactionService.getAllTransactions();
+    public ResponseEntity<List<TransactionResponse>> getAllTransactions(){
+        List<TransactionResponse> transactionList = this.transactionService.getAllTransactions();
         if (transactionList.isEmpty()){
             return ResponseEntity.noContent().build();
         } else {
@@ -80,8 +81,8 @@ public class TransactionRestController {
             @ApiResponse(responseCode = "204", description = "Empty transaction list")
     })
     @GetMapping("/customer")
-    public ResponseEntity<List<Transaction>> findTransactionByAccount(@RequestParam String ibanAccount) throws BusinessRuleException, UnknownHostException {
-        List<Transaction> transactionList = this.transactionService.getAllTransactionsByAccount(ibanAccount);
+    public ResponseEntity<List<TransactionResponse>> findTransactionByAccount(@RequestParam String ibanAccount) throws BusinessRuleException, UnknownHostException {
+        List<TransactionResponse> transactionList = this.transactionService.getAllTransactionsByAccount(ibanAccount);
         if (transactionList.isEmpty()){
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } else {
