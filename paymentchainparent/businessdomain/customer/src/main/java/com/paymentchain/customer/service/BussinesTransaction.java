@@ -1,13 +1,13 @@
-package com.paymentchain.customer.bussines.transactions;
+package com.paymentchain.customer.service;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.paymentchain.customer.common.mappers.CustomerRequestMapper;
 import com.paymentchain.customer.common.mappers.CustomerResponseMapper;
 import com.paymentchain.customer.common.mappers.CustomerSimpleResponseMapper;
-import com.paymentchain.customer.dto.CustomerRequest;
-import com.paymentchain.customer.dto.CustomerResponse;
-import com.paymentchain.customer.dto.CustomerSimpleResponse;
-import com.paymentchain.customer.dto.ProductsResponse;
+import com.paymentchain.customer.entities.dto.CustomerRequest;
+import com.paymentchain.customer.entities.dto.CustomerResponse;
+import com.paymentchain.customer.entities.dto.CustomerSimpleResponse;
+import com.paymentchain.customer.entities.dto.ProductsResponse;
 import com.paymentchain.customer.entities.Customer;
 import com.paymentchain.customer.entities.CustomerProduct;
 import com.paymentchain.customer.common.exception.BusinessRuleException;

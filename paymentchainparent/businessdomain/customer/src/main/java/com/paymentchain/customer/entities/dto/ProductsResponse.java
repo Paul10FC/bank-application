@@ -1,4 +1,4 @@
-package com.paymentchain.customer.dto;
+package com.paymentchain.customer.entities.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;

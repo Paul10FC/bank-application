@@ -1,10 +1,10 @@
-package com.paymentchain.customer.controller;
+package com.paymentchain.customer.web.controller;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.paymentchain.customer.bussines.transactions.BussinesTransaction;
-import com.paymentchain.customer.dto.CustomerRequest;
-import com.paymentchain.customer.dto.CustomerResponse;
-import com.paymentchain.customer.dto.CustomerSimpleResponse;
+import com.paymentchain.customer.service.BussinesTransaction;
+import com.paymentchain.customer.entities.dto.CustomerRequest;
+import com.paymentchain.customer.entities.dto.CustomerResponse;
+import com.paymentchain.customer.entities.dto.CustomerSimpleResponse;
 import com.paymentchain.customer.entities.Customer;
 import com.paymentchain.customer.common.exception.BusinessRuleException;
 import io.swagger.v3.oas.annotations.Operation;
