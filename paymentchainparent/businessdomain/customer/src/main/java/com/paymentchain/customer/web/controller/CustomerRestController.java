@@ -6,7 +6,7 @@ import com.paymentchain.customer.dto.CustomerRequest;
 import com.paymentchain.customer.dto.CustomerResponse;
 import com.paymentchain.customer.dto.CustomerSimpleResponse;
 import com.paymentchain.customer.entities.Customer;
-import com.paymentchain.customer.exception.BusinessRuleException;
+import com.paymentchain.customer.common.exception.BusinessRuleException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;

@@ -1,16 +1,16 @@
 package com.paymentchain.customer.bussines.transactions;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.paymentchain.customer.common.CustomerRequestMapper;
-import com.paymentchain.customer.common.CustomerResponseMapper;
-import com.paymentchain.customer.common.CustomerSimpleResponseMapper;
+import com.paymentchain.customer.common.mappers.CustomerRequestMapper;
+import com.paymentchain.customer.common.mappers.CustomerResponseMapper;
+import com.paymentchain.customer.common.mappers.CustomerSimpleResponseMapper;
 import com.paymentchain.customer.dto.CustomerRequest;
 import com.paymentchain.customer.dto.CustomerResponse;
 import com.paymentchain.customer.dto.CustomerSimpleResponse;
 import com.paymentchain.customer.dto.ProductsResponse;
 import com.paymentchain.customer.entities.Customer;
 import com.paymentchain.customer.entities.CustomerProduct;
-import com.paymentchain.customer.exception.BusinessRuleException;
+import com.paymentchain.customer.common.exception.BusinessRuleException;
 import com.paymentchain.customer.repository.CustomerRepository;
 import io.netty.channel.ChannelOption;
 import io.netty.channel.epoll.EpollChannelOption;

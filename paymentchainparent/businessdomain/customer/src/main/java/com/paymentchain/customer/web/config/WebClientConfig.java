@@ -1,4 +1,4 @@
-package com.paymentchain.customer.common;
+package com.paymentchain.customer.common.config;
 
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;
