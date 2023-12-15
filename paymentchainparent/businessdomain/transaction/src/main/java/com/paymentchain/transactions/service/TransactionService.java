@@ -1,9 +1,11 @@
 package com.paymentchain.transactions.service;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.paymentchain.transactions.entities.Status;
+import com.paymentchain.transactions.common.TransactionRequestMapper;
+import com.paymentchain.transactions.common.TransactionResponseMapper;
+import com.paymentchain.transactions.entities.dto.TransactionResponse;
 import com.paymentchain.transactions.entities.Transaction;
-import com.paymentchain.transactions.entities.dto.TransactionDTO;
+import com.paymentchain.transactions.entities.dto.TransactionRequest;
 import com.paymentchain.transactions.service.exception.BusinessRuleException;
 import com.paymentchain.transactions.repository.TransactionRepository;
 import com.paymentchain.transactions.service.utils.TransactionUtils;
@@ -21,26 +23,26 @@ import reactor.netty.http.client.HttpClient;
 
 import java.net.UnknownHostException;
 import java.time.Duration;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
 import static com.paymentchain.transactions.service.utils.TransactionUtils.setNewTransaction;
-import static com.paymentchain.transactions.service.utils.TransactionUtils.validateAmount;
 
 @Service
 public class TransactionService {
 
+    TransactionResponseMapper responseMapper;
     TransactionRepository transactionRepository;
+    TransactionRequestMapper requestMapper;
     private final WebClient.Builder CLIENT;
 
     @Autowired
-    public TransactionService(TransactionRepository transactionRepository, WebClient.Builder client) {
+    public TransactionService(TransactionRepository transactionRepository, WebClient.Builder client, TransactionRequestMapper requestMapper, TransactionResponseMapper responseMapper) {
+        this.responseMapper = responseMapper;
         this.transactionRepository = transactionRepository;
+        this.requestMapper = requestMapper;
         this.CLIENT = client;
     }
 
@@ -63,53 +65,62 @@ public class TransactionService {
                 connection.addHandlerLast(new WriteTimeoutHandler(5000, TimeUnit.MILLISECONDS));
             });
 
-    public Optional<Transaction> newTransaction(TransactionDTO transactionInput) throws UnknownHostException, BusinessRuleException {
+    public Optional<Transaction> newTransaction(TransactionRequest request) throws UnknownHostException, BusinessRuleException {
+        Transaction buildTransaction = this.requestMapper.mapTransactionRequestToTransaction(request);
 
-        Optional<Double> customerAmount = getCustomerAmount(transactionInput.getAccountIban());
-        TransactionUtils.validateInputs(transactionInput);
+        TransactionUtils.validateInputs(buildTransaction);
+        Optional<Double> customerAmount = getCustomerAmount(buildTransaction.getAccountIban());
         TransactionUtils.validateAccount(customerAmount);
 
-        Transaction newTransaction = setNewTransaction(transactionInput, customerAmount.get());
+        Transaction newTransaction = setNewTransaction(buildTransaction, customerAmount.get());
 
         setNewAccountAmount(newTransaction.getAmount(), newTransaction.getAccountIban());
         this.transactionRepository.save(newTransaction);
         return Optional.of(newTransaction);
     }
 
-    public Optional<Transaction> updateTransaction(TransactionDTO input, long id) throws UnknownHostException, BusinessRuleException {
-        Optional<Transaction> actualTransaction = this.transactionRepository.findById(id);
+    public Optional<Transaction> updateTransaction(TransactionRequest input, String reference) throws UnknownHostException, BusinessRuleException {
+        Optional<Transaction> actualTransaction = this.transactionRepository.findTransactionByReference(reference);
 
         if (actualTransaction.isPresent()){
+
             if (input.getAmount() != 0 ) actualTransaction.get().setAmount(input.getAmount());
-            if (!input.getDate().isEmpty()){
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-                LocalDateTime dateTime = LocalDate.parse(input.getDate(), formatter).atStartOfDay();
-                actualTransaction.get().setDate(dateTime);
+
+            if (input.getDate() != null){
+                actualTransaction.get().setDate(input.getDate());
             }
+
             if (input.getChannel() != null) actualTransaction.get().setChannel(input.getChannel());
-            if (!input.getDescription().isEmpty()) actualTransaction.get().setDescription(input.getDescription());
-            if (!input.getAccountIban().isEmpty()) {
+
+            if (input.getDescription() != null) actualTransaction.get().setDescription(input.getDescription());
+
+            if (input.getAccountIban() != null) {
+
                 Optional<String> validateAccount = getAccountIban(input.getAccountIban());
                 if (validateAccount.isEmpty()){
-                    throw new BusinessRuleException("20023", "The new account don't match with any customer", HttpStatus.PRECONDITION_FAILED);
+                    throw new BusinessRuleException("20023", "The new account doesn't match with any customer", HttpStatus.PRECONDITION_FAILED);
                 } else {
                     actualTransaction.get().setAccountIban(validateAccount.get());
                 }
             }
+
             this.transactionRepository.save(actualTransaction.get());
         }
         return actualTransaction;
     }
 
-    public List<Transaction> getAllTransactions(){
-        return this.transactionRepository.findAll();
+    public List<TransactionResponse> getAllTransactions(){
+        List<Transaction> transactions = this.transactionRepository.findAll();
+
+        return this.responseMapper.mapTransactionListToTransactionResponseList(transactions);
     }
 
-    public List<Transaction> getAllTransactionsByAccount(String ibanAccount) throws UnknownHostException, BusinessRuleException {
+    public List<TransactionResponse> getAllTransactionsByAccount(String ibanAccount) throws UnknownHostException, BusinessRuleException {
         Optional<String> optionalAccount = getAccountIban(ibanAccount);
 
         if (optionalAccount.isPresent()){
-            return this.transactionRepository.findTransactionByAccountIban(ibanAccount);
+            List<Transaction> transactionList = this.transactionRepository.findTransactionByAccountIban(ibanAccount);
+            return this.responseMapper.mapTransactionListToTransactionResponseList(transactionList);
         } else {
             throw new BusinessRuleException("20231", "The iban account doesn't exist", HttpStatus.PRECONDITION_FAILED);
         }

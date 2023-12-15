@@ -4,11 +4,11 @@
  * and open the template in the editor.
  */
 package com.paymentchain.product.web.controller;
-import com.paymentchain.product.dto.ProductRequest;
-import com.paymentchain.product.dto.ProductResponse;
+import com.paymentchain.product.entities.dto.ProductRequest;
+import com.paymentchain.product.entities.dto.ProductResponse;
 import com.paymentchain.product.entities.Product;
 import com.paymentchain.product.service.ProductService;
-import com.paymentchain.product.web.exception.BusinessRuleException;
+import com.paymentchain.product.common.exception.BusinessRuleException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;

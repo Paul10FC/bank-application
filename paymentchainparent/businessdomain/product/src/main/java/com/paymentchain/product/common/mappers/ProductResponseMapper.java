@@ -1,6 +1,6 @@
-package com.paymentchain.product.common;
+package com.paymentchain.product.common.mappers;
 
-import com.paymentchain.product.dto.ProductResponse;
+import com.paymentchain.product.entities.dto.ProductResponse;
 import com.paymentchain.product.entities.Product;
 import org.mapstruct.Mapper;
 

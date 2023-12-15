@@ -1,4 +1,4 @@
-package com.paymentchain.product.common;
+package com.paymentchain.product.common.exception;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;

@@ -1,4 +1,4 @@
-package com.paymentchain.product.web.exception;
+package com.paymentchain.product.common.exception;
 
 import lombok.Getter;
 import lombok.Setter;

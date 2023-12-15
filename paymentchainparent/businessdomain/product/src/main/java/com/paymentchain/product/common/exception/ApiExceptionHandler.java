@@ -1,5 +1,4 @@
-package com.paymentchain.product.web.exception;
-import com.paymentchain.product.common.StandardizedApiExceptionResponse;
+package com.paymentchain.product.common.exception;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;

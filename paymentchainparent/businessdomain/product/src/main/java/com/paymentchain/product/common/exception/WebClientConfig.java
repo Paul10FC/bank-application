@@ -1,4 +1,4 @@
-package com.paymentchain.product.common;
+package com.paymentchain.product.common.exception;
 
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;

@@ -1,10 +1,8 @@
-package com.paymentchain.product.common;
+package com.paymentchain.product.common.mappers;
 
-import com.paymentchain.product.dto.ProductRequest;
+import com.paymentchain.product.entities.dto.ProductRequest;
 import com.paymentchain.product.entities.Product;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.Mappings;
 
 @Mapper(componentModel = "spring")
 public interface ProductRequestMapper {

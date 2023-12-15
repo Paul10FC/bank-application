@@ -1,12 +1,12 @@
 package com.paymentchain.product.service;
 
-import com.paymentchain.product.common.ProductRequestMapper;
-import com.paymentchain.product.common.ProductResponseMapper;
-import com.paymentchain.product.dto.ProductRequest;
-import com.paymentchain.product.dto.ProductResponse;
+import com.paymentchain.product.common.mappers.ProductRequestMapper;
+import com.paymentchain.product.common.mappers.ProductResponseMapper;
+import com.paymentchain.product.entities.dto.ProductRequest;
+import com.paymentchain.product.entities.dto.ProductResponse;
 import com.paymentchain.product.entities.Product;
 import com.paymentchain.product.respository.ProductRepository;
-import com.paymentchain.product.web.exception.BusinessRuleException;
+import com.paymentchain.product.common.exception.BusinessRuleException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
