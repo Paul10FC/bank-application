@@ -2,13 +2,10 @@ package com.paymentchain.transactions.service.utils;
 
 import com.paymentchain.transactions.entities.Status;
 import com.paymentchain.transactions.entities.Transaction;
-import com.paymentchain.transactions.entities.dto.TransactionDTO;
 import com.paymentchain.transactions.service.exception.BusinessRuleException;
 import org.springframework.http.HttpStatus;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
 public class TransactionUtils {
@@ -23,10 +20,6 @@ public class TransactionUtils {
 
         return reference.toString();
     }
-    public static LocalDateTime parseLocalDateTime(String date){
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        return LocalDate.parse(date, formatter).atStartOfDay();
-    }
     public static Status getStatus(LocalDateTime date){
         if (date.isAfter(LocalDateTime.now())) {
             return Status.PENDING;
@@ -40,8 +33,8 @@ public class TransactionUtils {
     public static Double getFinalAmount(double amount, Double fee) {
         return amount - fee;
     }
-    public static void validateInputs(TransactionDTO input) throws BusinessRuleException {
-        boolean isEmptyDate = input.getDate().isEmpty();
+    public static void validateInputs(Transaction input) throws BusinessRuleException {
+        boolean isEmptyDate = input.getDate() == null;
         boolean isEmptyChannel = input.getChannel() == null;
         boolean isEmptyIban = input.getAccountIban() == null;
         boolean isEmptyAmount = input.getAmount() == 0;
@@ -50,9 +43,10 @@ public class TransactionUtils {
             throw new BusinessRuleException("12312345", "Date, Channel, Amount and Iban can't be empty", HttpStatus.PRECONDITION_FAILED);
         }
     }
-    public static void validateAccount(Optional<?> customer) throws BusinessRuleException {
-        if (customer.isEmpty()){
-            throw new BusinessRuleException("2314", "The accoutn don't exist", HttpStatus.PRECONDITION_FAILED);
+    public static void validateAccount(Optional<Double> amount) throws BusinessRuleException {
+
+        if (amount.isEmpty()){
+            throw new BusinessRuleException("2314", "The account doesn't exist", HttpStatus.PRECONDITION_FAILED);
         }
     }
     public static double validateAmount(double transactionAmount, double fee, double customerAmount) throws BusinessRuleException {
@@ -68,25 +62,18 @@ public class TransactionUtils {
         }
     }
 
-    public static Transaction setNewTransaction(TransactionDTO transactionInput, Double customerAmount) throws BusinessRuleException {
-        Transaction newTransaction = new Transaction();
+    public static Transaction setNewTransaction(Transaction transactionInput, Double customerAmount) throws BusinessRuleException {
 
         String referenceNumber = getRandomReferenceNumber();
-        LocalDateTime date = parseLocalDateTime(transactionInput.getDate());
-        Status status = getStatus(date);
+        Status status = getStatus(transactionInput.getDate());
         int fee = getFee();
         double amount = validateAmount(transactionInput.getAmount(), fee, customerAmount);
 
-        newTransaction.setReference(referenceNumber);
-        newTransaction.setDate(date);
-        newTransaction.setStatus(status);
-        newTransaction.setAmount(amount);
-        newTransaction.setFee(fee);
+        transactionInput.setReference(referenceNumber);
+        transactionInput.setStatus(status);
+        transactionInput.setAmount(amount);
+        transactionInput.setFee(fee);
 
-        newTransaction.setDescription(transactionInput.getDescription());
-        newTransaction.setChannel(transactionInput.getChannel());
-        newTransaction.setAccountIban(transactionInput.getAccountIban());
-
-        return newTransaction;
+        return transactionInput;
     }
 }
