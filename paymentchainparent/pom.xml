@@ -54,7 +54,7 @@ but ussually we use maven clean install
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
-        <spring-boot.version>2.6.2</spring-boot.version>
+        <spring-boot.version>3.2.0</spring-boot.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <postgres.version>42.5.0</postgres.version>
         <java-validation.version>2.0.1.Final</java-validation.version>
