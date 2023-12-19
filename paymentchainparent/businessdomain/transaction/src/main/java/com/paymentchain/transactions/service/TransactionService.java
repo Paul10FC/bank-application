@@ -23,6 +23,7 @@ import reactor.netty.http.client.HttpClient;
 
 import java.net.UnknownHostException;
 import java.time.Duration;
+import java.util.Base64;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -155,12 +156,17 @@ public class TransactionService {
     }
 
     public void setNewAccountAmount(Double mount, String iban) throws UnknownHostException {
+        String auth = "admin" + ":" + "12345";
+        byte[] encodedAuth = Base64.getEncoder().encode(auth.getBytes());
+        String authHeader = "Basic " + new String(encodedAuth);
+
         try {
             WebClient build =
                     this.CLIENT
                             .clientConnector(new ReactorClientHttpConnector(client))
                             .baseUrl("http://businessdomain-customer/customer")
                             .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                            .defaultHeader(HttpHeaders.AUTHORIZATION, authHeader)
                             .build();
 
             Optional<?> account =
@@ -177,12 +183,17 @@ public class TransactionService {
     }
 
     public Optional<Double> getCustomerAmount(String iban) throws UnknownHostException {
+        String auth = "admin" + ":" + "12345";
+        byte[] encodedAuth = Base64.getEncoder().encode(auth.getBytes());
+        String authHeader = "Basic " + new String(encodedAuth);
+
         try {
             WebClient build =
                     this.CLIENT
                             .clientConnector(new ReactorClientHttpConnector(client))
                             .baseUrl("http://businessdomain-customer/customer")
                             .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                            .defaultHeader(HttpHeaders.AUTHORIZATION, authHeader)
                             .build();
 
             JsonNode account =

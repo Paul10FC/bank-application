@@ -1,0 +1,3 @@
+[submodule "paymentchainparent/config-server-repo"]
+	path = paymentchainparent/config-server-repo
+	url = git@github.com:Paul10FC/config-server-repo.git
