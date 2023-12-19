@@ -7,6 +7,7 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="api-gateway" />
         <module name="config-server" />
         <module name="admin-server" />
         <module name="transactions" />
@@ -38,6 +39,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="apigateway" target="17" />
       <module name="configServer" target="17" />
       <module name="eurekaServer" target="17" />
       <module name="transactions" target="11" />
@@ -48,6 +50,8 @@
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="Transactions" options="-parameters" />
       <module name="admin-server" options="" />
+      <module name="api-gateway" options="" />
+      <module name="apigateway" options="" />
       <module name="billing" options="-parameters" />
       <module name="configServer" options="" />
       <module name="customer" options="" />
