@@ -52,10 +52,13 @@ but ussually we use maven clean install
     <description>POM parent project for all spring boot projects</description>
 
     <properties>
-        <maven.compiler.source>17</maven.compiler.source>
-        <maven.compiler.target>17</maven.compiler.target>
-        <spring-boot.version>3.2.0</spring-boot.version>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+
+        <spring-boot.version>2.3.4.RELEASE</spring-boot.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <spring-boot-maven-plugin.version>2.3.4.RELEASE</spring-boot-maven-plugin.version>
         <postgres.version>42.5.0</postgres.version>
         <java-validation.version>2.0.1.Final</java-validation.version>
         <dockerfile-maven-version>1.4.13</dockerfile-maven-version>
@@ -93,12 +96,8 @@ but ussually we use maven clean install
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
         </dependency>
 
     </dependencies>
@@ -120,7 +119,7 @@ but ussually we use maven clean install
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>${spring-boot.version}</version>
+                <version>${spring-boot-maven-plugin.version}</version>
                 <executions>
                     <execution>
                         <goals>

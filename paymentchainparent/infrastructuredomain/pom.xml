@@ -22,7 +22,12 @@
     </modules>
 
     <properties>
-        <spring-cloud-dependencies.version>2023.0.0</spring-cloud-dependencies.version>
+        <spring-cloud-dependencies.version>Hoxton.SR8</spring-cloud-dependencies.version>
+        <spring-cloud-config-server.version>2.2.5.RELEASE</spring-cloud-config-server.version>
+        <spring-cloud-starter-eureka.version>1.4.7.RELEASE</spring-cloud-starter-eureka.version>
+        <spring-cloud-starter-feign.version>1.4.7.RELEASE</spring-cloud-starter-feign.version>
+        <spring-cloud-starter-hystrix.version>1.4.7.RELEASE</spring-cloud-starter-hystrix.version>
+        <spring-cloud-stream.version>3.0.7.RELEASE</spring-cloud-stream.version>
     </properties>
 
     <dependencyManagement>
