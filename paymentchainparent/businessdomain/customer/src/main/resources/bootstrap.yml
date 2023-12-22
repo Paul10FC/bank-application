@@ -10,14 +10,16 @@ eureka:
     serviceUrl:
       defaultZone: ${EUREKA_SERVER:http://localhost:8761/eureka}
 spring:
+  config:
+    import: config-server:http://localhost:8888
   application:
     name: businessdomain-customer
   cloud:
     config:
+      fail-fast: true
       discovery:
         enabled: true
         service-id: config-server
-      failFast: true
       #name of base properties config file, before profile
       name: config-client
       #label: latest
