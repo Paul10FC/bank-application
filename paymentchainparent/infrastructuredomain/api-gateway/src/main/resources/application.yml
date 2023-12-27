@@ -1,15 +1,29 @@
 server:
   port: 8080
+eureka:
+  client:
+    service-url:
+      defaultZone: ${EUREKA_SERVER:http://localhost:8761/eureka}
 logging:
   level:
     org.springframework.cloud.gateway: DEBUG
     reactor.netty.http.client: DEBUG
 
 spring:
+  application:
+    name: Api-Gateway
   cloud:
     gateway:
       routes:
         - id: customer_service
-          uri: http://localhost:8081
+          uri: lb://businessdomain-customer
           predicates:
             - Path=/customer/**
+        - id: transaction_service
+          uri: lb://businessdomain-transactions
+          predicates:
+            - Path=/transactions/**
+        - id: product_service
+          uri: lb://businessdomain-product
+          predicates:
+            - Path=/product/**
