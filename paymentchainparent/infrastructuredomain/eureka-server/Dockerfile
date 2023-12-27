@@ -1,6 +1,4 @@
-FROM openjdk:17-alpine
-RUN addgroup -S paymentchain && adduser -S admin -G paymentchain
-USER admin:paymentchain
+FROM adoptopenjdk/openjdk11:latest
 VOLUME /tmp
 ARG JAR_FILE=target/*.jar
 ADD target/${JAR_FILE} app.jar
