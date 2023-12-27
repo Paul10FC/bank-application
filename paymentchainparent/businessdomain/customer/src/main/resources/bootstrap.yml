@@ -12,10 +12,6 @@ eureka:
 spring:
   application:
     name: businessdomain-customer
-  boot:
-    admin:
-      client:
-        url: lb://admin-server
   cloud:
     config:
       discovery:
