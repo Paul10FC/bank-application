@@ -39,6 +39,19 @@ services:
       - registry-discovery
     ports:
       - "8762:8762"
+
+  api-gateway:
+    container_name: id-apigateway
+    image: paymentchain/microservice-docker-api-gateway:0.0.1-SNAPSHOT
+    environment:
+      - JAVA_OPTS=
+        -Xms256M
+        -Xmx256M
+        -DEUREKA_SERVER=http://registry-discovery:8761/eureka/
+    depends_on:
+      - registry-discovery
+    ports:
+      - "8080:8080"
 # PRODUCT
   product-catalog:
     container_name: bd-product-catalog
@@ -67,8 +80,6 @@ services:
     depends_on:
       - registry-discovery
       - configuration
-    ports:
-      - "8081:8081"
 # Transaction
   transactions:
     container_name: bd-transactions
