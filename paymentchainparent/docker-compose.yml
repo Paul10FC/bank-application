@@ -120,3 +120,14 @@ services:
       - "80:80"
     depends_on:
       - postgres_db
+# Keycloack Server
+  keycloack_server:
+    container_name: id-keycloackServer
+    image: jboss/keycloak
+    restart: always
+    environment:
+      KEYCLOAK_USER: admin
+      KEYCLOAK_PASSWORD: admin
+      DB_VENDOR: H2
+    ports:
+      - "8091:8080"
