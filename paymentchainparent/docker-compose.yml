@@ -52,7 +52,23 @@ services:
       - registry-discovery
     ports:
       - "8080:8080"
-# PRODUCT
+
+  keycloack:
+    container_name: keycloack-adapter
+    image: paymentchain/microservice-docker-keycloack-adapter:0.0.1-SNAPSHOT
+    environment:
+      - JAVA_OPTS=
+         -Xms256M
+         -Xms256M
+         -DEUREKA_SERVER=http://registry-discovery:8761/eureka/
+         -DKEYCLOACK_SERVER=http://keycloack_server:8080/auth/realms/
+         -DKEYCLOACK_REAL_ID=G3tJYnggYU6LUzf-CIjSlN6BQSm2Ii12Vq1ThgcmhF8
+    depends_on:
+      - registry-discovery
+    ports:
+      - "8088:8088"
+
+      # PRODUCT
   product-catalog:
     container_name: bd-product-catalog
     image: paymentchain/microservice-docker-product:0.0.1-SNAPSHOT
