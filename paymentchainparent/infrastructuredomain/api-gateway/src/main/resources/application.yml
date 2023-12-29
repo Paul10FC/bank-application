@@ -18,6 +18,12 @@ spring:
         - id: customer_service
           uri: lb://businessdomain-customer
           predicates:
+            - Path=/customer/full
+          filters:
+            - name: AuthenticationFiltering
+        - id: customer_service
+          uri: lb://businessdomain-customer
+          predicates:
             - Path=/customer/**
         - id: transaction_service
           uri: lb://businessdomain-transactions
