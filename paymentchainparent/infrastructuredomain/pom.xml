@@ -19,6 +19,7 @@
         <module>admin-server</module>
         <module>config-server</module>
         <module>api-gateway</module>
+        <module>keycloack-adapter</module>
     </modules>
 
     <properties>
