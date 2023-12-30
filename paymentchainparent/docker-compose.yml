@@ -39,7 +39,7 @@ services:
       - registry-discovery
     ports:
       - "8762:8762"
-
+# API GATEWAY
   api-gateway:
     container_name: id-apigateway
     image: paymentchain/microservice-docker-api-gateway:0.0.1-SNAPSHOT
@@ -50,9 +50,12 @@ services:
         -DEUREKA_SERVER=http://registry-discovery:8761/eureka/
     depends_on:
       - registry-discovery
+      - configuration
+      - customer
+      - keycloack
     ports:
       - "8080:8080"
-
+# KEYCLOACK ADAPTER
   keycloack:
     container_name: keycloack-adapter
     image: paymentchain/microservice-docker-keycloack-adapter:0.0.1-SNAPSHOT
@@ -62,13 +65,15 @@ services:
          -Xms256M
          -DEUREKA_SERVER=http://registry-discovery:8761/eureka/
          -DKEYCLOACK_SERVER=http://keycloack_server:8080/auth/realms/
-         -DKEYCLOACK_REAL_ID=G3tJYnggYU6LUzf-CIjSlN6BQSm2Ii12Vq1ThgcmhF8
+         -DKEYCLOACK_REAL_ID=tJAkX0O_DJXlUPYZtbl2b_FsR_cHLcuG7zXm5fISqoA
     depends_on:
       - registry-discovery
+      - configuration
+      - keycloack_server
     ports:
       - "8088:8088"
 
-      # PRODUCT
+# PRODUCT
   product-catalog:
     container_name: bd-product-catalog
     image: paymentchain/microservice-docker-product:0.0.1-SNAPSHOT
@@ -96,7 +101,7 @@ services:
     depends_on:
       - registry-discovery
       - configuration
-# Transaction
+      # Transaction
   transactions:
     container_name: bd-transactions
     image: paymentchain/microservice-docker-transaction:0.0.1-SNAPSHOT
@@ -142,8 +147,14 @@ services:
     image: jboss/keycloak
     restart: always
     environment:
-      KEYCLOAK_USER: admin
-      KEYCLOAK_PASSWORD: admin
-      DB_VENDOR: H2
+      DB_VENDOR: POSTGRES
+      DB_ADDR: postgres
+      POSTGRES_DB: keycloak
+      DB_USER: keycloack_user
+      DB_PASSWORD: 12345
+      #KEYCLOAK_USER: admin
+      #KEYCLOAK_PASSWORD: admin
     ports:
       - "8091:8080"
+    depends_on:
+      - postgres_db
