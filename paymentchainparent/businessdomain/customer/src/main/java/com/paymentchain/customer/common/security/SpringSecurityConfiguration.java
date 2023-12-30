@@ -37,6 +37,7 @@ public class SpringSecurityConfiguration {
                         // Any url containing the word 'Billing', must be authenticated to perform a post request
                         .antMatchers(HttpMethod.POST, "/*customer*/**").authenticated()
                         .antMatchers(HttpMethod.GET, "/*customer*/**").hasRole("ADMIN")
+                        .antMatchers(HttpMethod.GET, "/*customer/full").permitAll()
                 )
                 .httpBasic(Customizer.withDefaults())
                 .formLogin(Customizer.withDefaults());
