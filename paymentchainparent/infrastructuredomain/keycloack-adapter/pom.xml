@@ -10,11 +10,13 @@
 
 	<properties>
 		<org.lombok.version>1.18.24</org.lombok.version>
+
+		<spring-cloud-dependencies.version>2021.0.5</spring-cloud-dependencies.version>
+		<spring-boot-maven-plugin.version>2.7.5</spring-boot-maven-plugin.version>
+		<spring-boot.version>2.7.5</spring-boot.version>
+
 		<maven.compiler.source>17</maven.compiler.source>
 		<maven.compiler.target>17</maven.compiler.target>
-		<spring-boot-maven-plugin.version>3.1.7</spring-boot-maven-plugin.version>
-		<spring-boot.version>3.1.7</spring-boot.version>
-		<spring-cloud-dependencies.version>2021.0.5</spring-cloud-dependencies.version>
 	</properties>
 
 	<artifactId>keycloack-adapter</artifactId>
@@ -58,6 +60,14 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<version>${spring-boot-maven-plugin.version}</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>repackage</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
