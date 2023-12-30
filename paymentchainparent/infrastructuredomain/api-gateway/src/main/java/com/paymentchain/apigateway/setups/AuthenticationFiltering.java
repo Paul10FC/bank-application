@@ -37,7 +37,7 @@ public class AuthenticationFiltering extends AbstractGatewayFilterFactory<Authen
                 throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Bad Authorization structure");
             }
 
-            return  webclientBuilder.build()
+            return  webClient.build()
                     .get()
                     .uri("http://keycloack/roles").header(HttpHeaders.AUTHORIZATION, parts[1])
                     .retrieve()
